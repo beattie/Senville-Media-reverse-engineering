@@ -1,0 +1,20 @@
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Environment variables (contains secrets)
+.env
+
+# Packet captures
+*.cap
+*.pcap
+*.pcapng
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*~
