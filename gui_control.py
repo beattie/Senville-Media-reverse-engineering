@@ -16,20 +16,10 @@ import time
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
-try:
-    from midea_beautiful import appliance_state
-    from midea_beautiful.midea import MIDEA_BEAUTIFUL_DEHUMIDIFIER_APP
-except ImportError:
-    print("Error: midea-beautiful-air library not installed")
-    print("Install with: pip install midea-beautiful-air")
-    sys.exit(1)
-
-try:
-    from dotenv import load_dotenv
-except ImportError:
-    print("Error: python-dotenv library not installed")
-    print("Install with: pip install python-dotenv")
-    sys.exit(1)
+# Import check moved to after potential venv activation
+# These imports will fail with clear error if libraries missing
+from midea_beautiful import appliance_state
+from dotenv import load_dotenv
 
 
 class SenvilleGUI:
