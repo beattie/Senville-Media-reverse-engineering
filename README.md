@@ -5,6 +5,7 @@ Complete toolkit for local control of Senville/Midea mini-split air conditioners
 ## Features
 
 ✅ **Local Control** - No cloud required, direct communication with your AC
+✅ **Desktop GUI** - Native graphical interface with real-time status updates
 ✅ **Web Dashboard** - Modern web interface with REST API (http://localhost:5000)
 ✅ **Scheduling** - Automated temperature/mode changes with background daemon
 ✅ **Command-Line Tools** - Python scripts for all AC functions
@@ -110,6 +111,15 @@ python3 control_simple.py --power off
 python3 control_full.py --power on --mode cool --temp-f 68 --fan-speed 60 --vswing on
 ```
 
+**Desktop GUI:**
+```bash
+# Start the graphical interface
+./start_gui.sh
+
+# Native desktop app with real-time status and controls
+# No browser needed, uses Python tkinter
+```
+
 **Web Interface:**
 ```bash
 # Start the web server
@@ -141,7 +151,8 @@ curl -X POST http://localhost:5000/api/temperature/72
 - `QUICK_REFERENCE.md` - Quick command reference (template)
 - `QUICK_REFERENCE.local.md` - Your personalized reference (generated)
 
-🌐 **Web Interface:**
+🖥️ **Interfaces:**
+- `GUI_INTERFACE.md` - Desktop GUI application
 - `WEB_INTERFACE.md` - Web dashboard and REST API documentation
 - `AUTOMATION.md` - Scheduling and automation guide
 
@@ -269,6 +280,7 @@ senville-control/
 │
 ├── Shell Scripts
 │   ├── generate_local.sh   # Generate personalized docs
+│   ├── start_gui.sh        # Start desktop GUI
 │   ├── start_web.sh        # Start web interface
 │   ├── troubleshoot.sh     # Connection diagnostics
 │   └── capture_*.sh        # Packet capture scripts
@@ -450,7 +462,9 @@ Educational and research use. This project is for controlling devices you own. R
 
 - **Setup Guide:** `README_SETUP.md`
 - **Quick Reference:** Run `./generate_local.sh` then see `QUICK_REFERENCE.local.md`
+- **Desktop GUI:** Run `./start_gui.sh` - Native desktop application
 - **Web Interface:** `http://localhost:5000` (after running `./start_web.sh`)
 - **Scheduling:** `AUTOMATION.md`
+- **GUI Documentation:** `GUI_INTERFACE.md`
 - **API Documentation:** `WEB_INTERFACE.md`
 - **Protocol Details:** `senville-protocol-documentation.md`
