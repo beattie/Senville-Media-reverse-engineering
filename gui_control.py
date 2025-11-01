@@ -354,8 +354,13 @@ class SenvilleGUI:
 
             # Mode
             mode_map = {1: 'Auto', 2: 'Cool', 3: 'Dry', 4: 'Heat', 5: 'Fan'}
+            mode_reverse = {1: 'auto', 2: 'cool', 3: 'dry', 4: 'heat', 5: 'fan'}
             mode_text = mode_map.get(state.mode, f"Unknown ({state.mode})")
             self.status_labels['mode'].config(text=mode_text)
+
+            # Update mode control to match current state
+            if state.mode in mode_reverse:
+                self.mode_var.set(mode_reverse[state.mode])
 
             # Temperatures
             target_temp = state.target_temperature
@@ -371,10 +376,19 @@ class SenvilleGUI:
             self.status_labels['target_temp'].config(text=f"{target_temp}{unit}")
             self.status_labels['indoor_temp'].config(text=f"{indoor_temp}{unit}")
 
+            # Update temperature control to match current state
+            self.temp_var.set(target_temp)
+            self.temp_label.config(text=f"{target_temp}°{self.temp_unit.get()}")
+
             # Fan speed
             fan_map = {20: 'Low', 40: 'Med-Low', 60: 'Medium', 80: 'Med-High', 102: 'Auto'}
+            fan_reverse = {20: 'Low', 40: 'Med-Low', 60: 'Medium', 80: 'Med-High', 102: 'Auto', 100: 'High'}
             fan_text = fan_map.get(state.fan_speed, f"{state.fan_speed}")
             self.status_labels['fan_speed'].config(text=fan_text)
+
+            # Update fan control to match current state
+            if state.fan_speed in fan_reverse:
+                self.fan_var.set(fan_reverse[state.fan_speed])
 
             # Swing
             self.status_labels['vswing'].config(
@@ -383,6 +397,10 @@ class SenvilleGUI:
             self.status_labels['hswing'].config(
                 text="ON" if state.horizontal_swing else "OFF"
             )
+
+            # Update swing controls to match current state
+            self.vswing_var.set(state.vertical_swing)
+            self.hswing_var.set(state.horizontal_swing)
 
             # Last updated
             now = datetime.now().strftime("%H:%M:%S")
