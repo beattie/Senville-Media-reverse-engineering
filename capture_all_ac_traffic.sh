@@ -1,9 +1,15 @@
 #!/bin/bash
 # Capture ALL traffic to/from the AC device
 
-DEVICE_IP="192.168.254.183"
+# Load environment variables
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    export $(grep -v '^#' "$SCRIPT_DIR/.env" | xargs)
+fi
+
+DEVICE_IP="${SENVILLE_IP:-192.168.1.100}"
 CAPTURE_FILE="senville_all_traffic"
-INTERFACE="enx000ec69c8299"
+INTERFACE="${NETWORK_INTERFACE:-eth0}"
 
 echo "=== Capturing ALL Traffic to/from Senville AC ==="
 echo "Device IP: $DEVICE_IP"
@@ -13,7 +19,7 @@ echo
 echo "BEFORE YOU START:"
 echo "1. Make sure your phone is on the SAME WiFi network as this computer"
 echo "2. Check your phone's WiFi settings - what network is it connected to?"
-echo "3. Your phone should be on the 192.168.254.x network"
+echo "3. Your phone and AC should be on the same network subnet"
 echo
 echo "DURING CAPTURE:"
 echo "1. Use the Senville app on your phone"

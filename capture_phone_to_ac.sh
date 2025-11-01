@@ -1,10 +1,16 @@
 #!/bin/bash
 # Capture traffic between phone and AC
 
-PHONE_IP="192.168.254.36"
-AC_IP="192.168.254.183"
+# Load environment variables
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    export $(grep -v '^#' "$SCRIPT_DIR/.env" | xargs)
+fi
+
+PHONE_IP="${PHONE_IP:-192.168.1.50}"
+AC_IP="${SENVILLE_IP:-192.168.1.100}"
 CAPTURE_FILE="phone_to_ac"
-INTERFACE="enx000ec69c8299"
+INTERFACE="${NETWORK_INTERFACE:-eth0}"
 
 echo "=== Capturing Traffic Between Phone and AC ==="
 echo "Phone IP:     $PHONE_IP"

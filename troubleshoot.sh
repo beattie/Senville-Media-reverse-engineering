@@ -1,14 +1,23 @@
 #!/bin/bash
 # Troubleshoot Senville AC Connection
 
+# Load environment variables
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    export $(grep -v '^#' "$SCRIPT_DIR/.env" | xargs)
+fi
+
+DEVICE_IP="${SENVILLE_IP:-192.168.1.100}"
+
 echo "=========================================="
 echo "Senville AC Connection Troubleshooter"
 echo "=========================================="
+echo "Device IP: $DEVICE_IP"
 echo ""
 
 # Test 1: Network connectivity
 echo "1. Testing network connectivity..."
-if ping -c 2 -W 3 192.168.254.183 > /dev/null 2>&1; then
+if ping -c 2 -W 3 "$DEVICE_IP" > /dev/null 2>&1; then
     echo "   ✓ AC is reachable on network"
 else
     echo "   ✗ AC is not reachable"
@@ -20,7 +29,7 @@ fi
 echo ""
 # Test 2: Port connectivity
 echo "2. Testing TCP port 6444..."
-if timeout 3 bash -c "</dev/tcp/192.168.254.183/6444" 2>/dev/null; then
+if timeout 3 bash -c "</dev/tcp/$DEVICE_IP/6444" 2>/dev/null; then
     echo "   ✓ Port 6444 is open"
 else
     echo "   ✗ Port 6444 is not responding"
@@ -31,7 +40,7 @@ echo ""
 echo "3. Testing device discovery..."
 cd "$(dirname "$0")"
 source venv/bin/activate > /dev/null 2>&1
-timeout 15 msmart-ng discover 192.168.254.183 2>&1 | grep -q "Found 1 devices" && \
+timeout 15 msmart-ng discover "$DEVICE_IP" 2>&1 | grep -q "Found 1 devices" && \
     echo "   ✓ Device discovered successfully" || \
     echo "   ✗ Discovery failed"
 
@@ -83,7 +92,7 @@ echo "   ./restart_web.sh"
 echo ""
 echo "3. Re-discover device:"
 echo "   source venv/bin/activate"
-echo "   msmart-ng discover 192.168.254.183"
+echo "   msmart-ng discover $DEVICE_IP"
 echo "   # Update .env with new token/key if changed"
 echo ""
 echo "4. Check WiFi signal:"

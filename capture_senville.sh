@@ -2,9 +2,15 @@
 # Capture traffic between Senville app and AC unit
 # This captures TCP traffic on port 6444 to the AC device
 
-DEVICE_IP="192.168.254.183"
+# Load environment variables
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/.env" ]; then
+    export $(grep -v '^#' "$SCRIPT_DIR/.env" | xargs)
+fi
+
+DEVICE_IP="${SENVILLE_IP:-192.168.1.100}"
 CAPTURE_FILE="senville_app_traffic"
-INTERFACE="enx000ec69c8299"  # Your current network interface
+INTERFACE="${NETWORK_INTERFACE:-eth0}"
 
 echo "=== Senville App Traffic Capture ==="
 echo "Device IP: $DEVICE_IP"
