@@ -33,3 +33,4 @@ schedules.json
 
 # Files with hardcoded credentials (if any)
 check_fan_controls.py
+try_all_apps.sh
