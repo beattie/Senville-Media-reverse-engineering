@@ -1,0 +1,16 @@
+[Unit]
+Description=Senville AC Web API Server
+After=network.target
+
+[Service]
+Type=simple
+User=beattie
+WorkingDirectory=/home/beattie/senville
+ExecStart=/home/beattie/senville/venv/bin/python3 /home/beattie/senville/api_server.py
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

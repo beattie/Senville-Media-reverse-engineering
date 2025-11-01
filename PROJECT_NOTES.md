@@ -2,7 +2,7 @@
 
 ## Project Status: ✅ COMPLETE & WORKING
 
-**Date:** 2025-10-30
+**Date:** 2025-10-31
 
 ## What Works
 
@@ -13,13 +13,15 @@
 ✅ **Fan speed control** (20/40/60/80/102)
 ✅ **Swing control** (vertical/horizontal oscillation)
 ✅ **Command-line tools** that work from any directory
+✅ **Web interface** with REST API and modern dashboard
+✅ **Automation & Scheduling** with web UI and background daemon
 
 ## Device Information
 
 - **Model:** Senville mini-split with OSK105 WiFi adapter
-- **IP Address:** 192.168.254.183
-- **Device ID:** 149533581404890
-- **MAC Address:** B8:8C:29:60:97:8A
+- **IP Address:** ${SENVILLE_IP}
+- **Device ID:** ${SENVILLE_DEVICE_ID}
+- **MAC Address:** ${SENVILLE_MAC}
 - **Protocol:** Midea V3 (same as Midea, Klimaire, Comfee, etc.)
 
 ## Key Files
@@ -34,6 +36,9 @@
 - `control_simple.py` - Basic control
 - `control_full.py` - Full control with swing/fan
 - `discover.py` - Device discovery
+- `api_server.py` - REST API server with web interface
+- `scheduler.py` - Scheduling daemon
+- `manage_schedules.py` - CLI schedule manager
 
 ### Configuration
 - `.env` - **Contains your credentials** (token, key, IP)
@@ -44,7 +49,24 @@
 - `QUICK_REFERENCE.md` - Quick command reference
 - `senville-protocol-documentation.md` - Protocol specs
 - `senville-control-guide.md` - Detailed usage guide
+- `WEB_INTERFACE.md` - Web interface and REST API documentation
+- `AUTOMATION.md` - Scheduling and automation guide
 - `PROJECT_NOTES.md` - This file
+
+### Web Interface (in ~/senville/web)
+- `index.html` - Main dashboard interface
+- `schedules.html` - Scheduling interface
+- `style.css` - Main styling
+- `schedules.css` - Scheduling page styling
+- `app.js` - Main JavaScript control
+- `schedules.js` - Scheduling JavaScript
+- `start_web.sh` - Quick start script
+
+### Automation
+- `schedules.json` - Schedule storage
+- `scheduler.pid` - Scheduler daemon PID
+- `senville-scheduler.service` - Systemd service
+- `install_services.sh` - Service installer
 
 ## How to Resume This Project
 
@@ -71,10 +93,14 @@ Resume my Senville AC reverse engineering project in ~/senville
 
 ## Potential Next Steps / Features to Add
 
-### 1. **Automation & Scheduling**
-- Create cron jobs for scheduled temperature changes
-- Morning/evening auto-adjustments
-- Temperature based on weather
+### 1. **Automation & Scheduling** ✅ DONE
+- ✅ Scheduled temperature changes
+- ✅ Morning/evening auto-adjustments
+- ✅ Background daemon
+- ✅ Web-based schedule management
+- Temperature based on weather (future enhancement)
+- **Access at:** http://localhost:5000/schedules.html
+- **See:** AUTOMATION.md
 
 ### 2. **Home Assistant Integration**
 - Direct integration using existing libraries
@@ -100,10 +126,12 @@ Resume my Senville AC reverse engineering project in ~/senville
 - Historical data graphs
 - Alert on errors
 
-### 6. **Mobile/Web Interface**
-- Simple web dashboard
-- RESTful API wrapper
+### 6. **Mobile/Web Interface** ✅ DONE
+- ✅ Simple web dashboard
+- ✅ RESTful API wrapper
 - Mobile app (using existing Python backend)
+- **Access at:** http://localhost:5000
+- **See:** WEB_INTERFACE.md
 
 ### 7. **Multiple Unit Support**
 - Control multiple Senville units
@@ -152,12 +180,12 @@ git log
 ## Troubleshooting
 
 ### If Commands Don't Work
-1. Check device is online: `ping 192.168.254.183`
+1. Check device is online: `ping ${SENVILLE_IP}`
 2. Verify credentials in `.env` file
 3. Check virtual environment: `source ~/senville/venv/bin/activate`
 
 ### If Device IP Changes
-1. Find new IP: `nmap -p 6444 --open 192.168.254.0/24`
+1. Find new IP: `nmap -p 6444 --open YOUR_NETWORK_SUBNET/24`
 2. Update `.env` file: `SENVILLE_IP=NEW_IP`
 3. Or set DHCP reservation in router
 
@@ -165,7 +193,7 @@ git log
 ```bash
 cd ~/senville
 source venv/bin/activate
-msmart-ng discover 192.168.254.183
+msmart-ng discover ${SENVILLE_IP}
 ```
 
 ## Resources

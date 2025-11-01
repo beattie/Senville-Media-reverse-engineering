@@ -6,6 +6,11 @@ __pycache__/
 # Environment variables (contains secrets)
 .env
 
+# Generated local files with real values
+*.local
+*.local.*
+docs.local/
+
 # Packet captures
 *.cap
 *.pcap
@@ -18,3 +23,13 @@ __pycache__/
 *.tmp
 *.swp
 *~
+
+# Runtime files
+*.pid
+scheduler.pid
+
+# User data
+schedules.json
+
+# Files with hardcoded credentials (if any)
+check_fan_controls.py

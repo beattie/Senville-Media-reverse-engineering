@@ -1,6 +1,48 @@
 # Senville AC Control - Quick Reference
 
-## Commands (Run from anywhere)
+## Web Interface
+
+**Start server:**
+```bash
+cd ~/senville
+./start_web.sh
+```
+
+**Access:**
+```
+http://localhost:5000              # Main control dashboard
+http://localhost:5000/schedules.html   # Scheduling interface
+```
+
+**Features:**
+- Real-time status updates
+- Full AC control via web UI
+- Schedule management
+- REST API for automation
+- Mobile-friendly design
+
+**See:** WEB_INTERFACE.md and AUTOMATION.md
+
+## Scheduling
+
+**Create schedules via CLI:**
+```bash
+# Add morning warmup schedule
+python3 manage_schedules.py add "Morning Heat" "07:00" --power on --mode heat --temp-f 70
+
+# List all schedules
+python3 manage_schedules.py list
+
+# Start scheduler daemon
+python3 scheduler.py --daemon
+```
+
+**Or use web interface:**
+http://localhost:5000/schedules.html
+
+**See:** AUTOMATION.md for full documentation
+
+## Command Line (Run from anywhere)
 
 ### Check Status
 ```bash
@@ -65,6 +107,7 @@ senville-control --power on --mode cool --temp-f 72 --vswing off --fan-speed 60
 
 **Documentation:**
 - `README.md` - Complete guide
+- `WEB_INTERFACE.md` - Web dashboard & REST API
 - `senville-protocol-documentation.md` - Protocol details
 - `senville-control-guide.md` - Usage guide
 - `QUICK_REFERENCE.md` - This file
@@ -93,9 +136,9 @@ senville-status -q
 
 ## Device Info
 
-- **IP:** 192.168.254.183
-- **ID:** 149533581404890
-- **MAC:** B8:8C:29:60:97:8A
+- **IP:** ${SENVILLE_IP}
+- **ID:** ${SENVILLE_DEVICE_ID}
+- **MAC:** ${SENVILLE_MAC}
 - **Model:** OSK105 (Midea-based)
 
 ## Features
@@ -108,8 +151,10 @@ senville-status -q
 ✅ Vertical/horizontal swing
 ✅ Multiple verbosity levels
 ✅ Works from any directory
+✅ Web interface & REST API
 
 ---
 
 **Created:** 2025-10-30
+**Updated:** 2025-10-31
 **Status:** Fully operational ✅

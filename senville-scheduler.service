@@ -1,0 +1,16 @@
+[Unit]
+Description=Senville AC Scheduler Service
+After=network.target
+
+[Service]
+Type=forking
+User=beattie
+WorkingDirectory=/home/beattie/senville
+ExecStart=/home/beattie/senville/venv/bin/python3 /home/beattie/senville/scheduler.py --daemon
+ExecStop=/home/beattie/senville/venv/bin/python3 /home/beattie/senville/scheduler.py --stop
+PIDFile=/home/beattie/senville/scheduler.pid
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

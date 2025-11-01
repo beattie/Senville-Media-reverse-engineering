@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senville AC Control</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Senville AC Control</h1>
+            <nav class="header-nav">
+                <a href="/" class="nav-link active">Control</a>
+                <a href="/schedules.html" class="nav-link">Schedules</a>
+            </nav>
+            <div id="connection-status" class="status-badge">Connecting...</div>
+        </header>
+
+        <main>
+            <!-- Status Card -->
+            <div class="card status-card">
+                <h2>Current Status</h2>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="label">Power</span>
+                        <span id="status-power" class="value">--</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Mode</span>
+                        <span id="status-mode" class="value">--</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Target</span>
+                        <span id="status-target-temp" class="value">--</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Indoor</span>
+                        <span id="status-indoor-temp" class="value">--</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Outdoor</span>
+                        <span id="status-outdoor-temp" class="value">--</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Fan</span>
+                        <span id="status-fan" class="value">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Power Control -->
+            <div class="card">
+                <h2>Power</h2>
+                <div class="control-group">
+                    <button id="btn-power-on" class="btn btn-success btn-large">ON</button>
+                    <button id="btn-power-off" class="btn btn-danger btn-large">OFF</button>
+                </div>
+            </div>
+
+            <!-- Mode Control -->
+            <div class="card">
+                <h2>Mode</h2>
+                <div class="control-group">
+                    <button class="btn btn-mode" data-mode="auto">Auto</button>
+                    <button class="btn btn-mode btn-cool" data-mode="cool">Cool</button>
+                    <button class="btn btn-mode btn-heat" data-mode="heat">Heat</button>
+                    <button class="btn btn-mode" data-mode="dry">Dry</button>
+                    <button class="btn btn-mode" data-mode="fan">Fan</button>
+                </div>
+            </div>
+
+            <!-- Temperature Control -->
+            <div class="card">
+                <h2>Temperature</h2>
+                <div class="temp-control">
+                    <button id="btn-temp-down" class="btn btn-temp">-</button>
+                    <div class="temp-display">
+                        <input type="number" id="temp-input" min="60" max="87" step="1" value="72">
+                        <span id="temp-unit">°F</span>
+                    </div>
+                    <button id="btn-temp-up" class="btn btn-temp">+</button>
+                </div>
+                <button id="btn-set-temp" class="btn btn-primary btn-full">Set Temperature</button>
+            </div>
+
+            <!-- Fan Speed Control -->
+            <div class="card">
+                <h2>Fan Speed</h2>
+                <div class="control-group">
+                    <button class="btn btn-fan" data-speed="20">Low</button>
+                    <button class="btn btn-fan" data-speed="40">Med-Low</button>
+                    <button class="btn btn-fan" data-speed="60">Medium</button>
+                    <button class="btn btn-fan" data-speed="80">Med-High</button>
+                    <button class="btn btn-fan" data-speed="102">Auto</button>
+                </div>
+            </div>
+
+            <!-- Swing Control -->
+            <div class="card">
+                <h2>Swing Control</h2>
+                <div class="swing-controls">
+                    <div class="swing-item">
+                        <label for="vswing-toggle">Vertical Swing</label>
+                        <label class="toggle">
+                            <input type="checkbox" id="vswing-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="swing-item">
+                        <label for="hswing-toggle">Horizontal Swing</label>
+                        <label class="toggle">
+                            <input type="checkbox" id="hswing-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Last updated: <span id="last-update">Never</span></p>
+            <button id="btn-refresh" class="btn btn-small">Refresh Status</button>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
